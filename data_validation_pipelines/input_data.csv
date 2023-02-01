@@ -1,0 +1,4 @@
+pl_suffix,source_table_name,target_table_name,source_name_to_fetchcols,chksum_agg_cols,chksum_group_cols,regex_exp,remove_ascii_from_cols,natural_keys,pipeline_tgt_dataset_name,distinct_count_cols,regex_replace,join_type,data_profiling
+test_final1,healthcare_dataproc.healthcare_member_source,healthcare.helathcare_member_target,Big_query_Sync,,extract(year from REGISTRATION_DATE),,,entity_name,accenture_data_validation,member_id,False,left,True
+test_final2,healthcare_dataproc.healthcare_member_source,healthcare.helathcare_member_target,Big_query_Sync,,extract(year from REGISTRATION_DATE),,,entity_name,accenture_data_validation,member_id,False,left,True
+test_final3,healthcare_dataproc.healthcare_member_source,healthcare.helathcare_member_target,Big_query_Sync,,extract(year from REGISTRATION_DATE),,,entity_name,accenture_data_validation,member_id,False,left,True

@@ -1,0 +1,4 @@
+dataset_name,table_name,datafile_path,file_format
+PUBLIC,external_table_script_demo1,gs://infoworks_temp/Large_Data_1/full_0/part-00001-b56109a3-40fc-42b8-8824-a74d71a97ed6-c000.snappy.parquet,parquet
+PUBLIC,external_table_script_demo2,gs://infoworks_temp/Large_Data_1/full_0/part-00002-b56109a3-40fc-42b8-8824-a74d71a97ed6-c000.snappy.parquet,parquet
+PUBLIC,external_table_script_demo3,gs://infoworks_temp/Large_Data_1/full_0/part-00003-b56109a3-40fc-42b8-8824-a74d71a97ed6-c000.snappy.parquet,parquet
