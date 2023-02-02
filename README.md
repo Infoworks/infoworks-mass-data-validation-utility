@@ -4,7 +4,7 @@
 - [Introduction](#introduction)
 - [Documentation](#documentation)
 - [Usage](#usage)
-- [Available Parameters](#Available Parameters)
+- [Available Parameters](#parameters)
 - [Authors](#authors)
 
 ## Introduction
@@ -54,7 +54,7 @@ cd data_validation_pipelines; python bulk_validation_pipelines.py
 cd data_profiling_pipelines; python profiling_pipelines.py --pipeline_number prof_pipeline1/prof_pipeline2/both
 ```
 
-## Available Parameters
+## Parameters
 Below is the description of all the available parameters for data validation script in input_data.csv file
 
 | Parameter                 | Description                                                                                                                     |
