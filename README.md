@@ -4,7 +4,7 @@
 - [Introduction](#introduction)
 - [Documentation](#documentation)
 - [Usage](#usage)
-- [Available Parameters](#parameters)
+- [Available Parameters](#Available Parameters)
 - [Authors](#authors)
 
 ## Introduction
