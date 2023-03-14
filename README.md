@@ -51,7 +51,8 @@ pip install -r requirements.txt
 ```python
 cd data_validation_pipelines; python bulk_validation_pipelines.py 
 
-cd data_profiling_pipelines; python profiling_pipelines.py --pipeline_number prof_pipeline1/prof_pipeline2/both
+cd data_profiling_pipelines; python profiling_pipelines.py --pipeline_number <prof_pipeline1/prof_pipeline2> --dataprofiling_source_id <source_id where the query_as_table has to be created> --dataprofiling_source_type <rdbms/hive. The source type where the query_as_table has to be created>
+
 ```
 
 ## Parameters
@@ -79,13 +80,11 @@ Below is the description of all the available parameters for data profiling scri
 | Parameter                 | Description                                                                                                                     |
 |---------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | pl_suffix                 | Suffix with which the pipelines have to be created. Usually this can be table name                                              |
-| source_table_name         | Fully qualified source table name. Example: default.sample_customer_table_src                                                   |
-| target_table_name         | Fully qualified target table name. Example: default.sample_customer_table_tgt                                                   |
+| source_table_name         | Fully qualified source table name for which the query as table has to be created. Example: default.sample_customer_table_src    |
+| target_table_name         | Fully qualified Bigquery target table name. Example: dataset_name.sample_customer_table_tgt                                     |
 | source_name_to_fetchcols  | Source Name in Infoworks under which Bigquery tables are crawled. This information is needed to fetch the list of columns names |
 | group_by_cols             | Comma separated list of columns on which group by is performed                                                                  |
 | pipeline_tgt_dataset_name | Target Dataset in Big query in which pipeline targets are to be created                                                         |
-| dataconnection_id         | Entity identifier of BigQuery Data connection to be used in the profiling source pipelines                                      |
-| dataconnection_name       | BigQuery Data connection name to be used in the profiling source pipelines                                                      |
 
 ## Authors
 
