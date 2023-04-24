@@ -18,7 +18,7 @@ The adapter uses the Infoworks platform to connect to a large number of data sou
 Once the Data Validation pipelines are created, these processes can then be orchestrated in Infoworks to deliver the automated solution with notification.
 
 
-Supports Infoworks version 5.3 onwards.
+Supports Infoworks version 5.3
 
 
 ![Data Validator Architecture](architecture.png)
