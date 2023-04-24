@@ -968,9 +968,7 @@ def main():
                         "job_type": "truncate_reload",
                         "job_name": "full-load",
                         "interactive_cluster_id": interactive_compute_id,
-                        "table_ids": [
-                            tables_added
-                        ]
+                        "table_ids": tables_added
                     }
                     ingestion_job_status = profiling_obj.submit_source_job(source_id=dataprofiling_source_id, body=body, poll=True)
             if ingestion_job_status:
