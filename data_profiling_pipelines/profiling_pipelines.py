@@ -498,8 +498,8 @@ class Profiling:
                 "schema_name": ds,
                 "catalog_name": project_name,
                 "table_type": "TABLE",
-                "target_dataset_name": ds,
-                "target_table_name": table
+                "target_dataset_name": ds, # Remove after fixing IPD-20570 
+                "target_table_name": table # Remove after fixing IPD-20570 
             })
         filter_tables_properties = {
             "schemas_filter": ",".join(schemas_filter),
