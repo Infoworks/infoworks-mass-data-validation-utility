@@ -33,7 +33,6 @@ class Profiling:
         self.job_queue_1 = queue.Queue(maxsize=QUEUE_MAX_SIZE)
         self.job_queue_2 = queue.Queue(maxsize=QUEUE_MAX_SIZE)
         self.bigquery_tables_to_crawl = []
-        self.sql_pipelines_final = []
         self.config_variables = {}
         self.pipeline_number = pipeline_number
 
@@ -90,7 +89,7 @@ class Profiling:
                 if len(result) != 0:
                     job_status = result["status"]
                     print(f"Polling job {job_id}. Status: {job_status} ")
-                    if job_status in ["completed", "failed", "aborted"]:
+                    if job_status in ["completed", "failed", "aborted", "canceled"]:
                         if job_status == "completed":
                             return 0
                         else:
@@ -226,9 +225,9 @@ class Profiling:
             # Numeric Columns
             if datatype in [3, 7, 8, 4, -5]:
                 for func in ["min", "max", "avg", "sum"]:
-                    if func == "sum":
+                    if func in ["sum", "avg"]:
                         col_name = f"{func}(CAST({value} AS NUMERIC))"
-                        col_name_modified = f"SUM{value}"
+                        col_name_modified = f"{func.upper()}{value}"
                     else:
                         col_name = f"{func}({value})"
                         col_name_modified = ''.join(e for e in col_name if e.isalnum() or e in ["_"]).upper()
@@ -284,9 +283,9 @@ class Profiling:
             # Numeric Columns
             if datatype in [3, 7, 8, 4, -5]:
                 for func in ["min", "max", "avg", "sum"]:
-                    if func == "sum":
+                    if func in ["sum", "avg"]:
                         col_name = f"{func}(CAST({value} AS NUMERIC))"
-                        col_name_modified = f"sum{value}"
+                        col_name_modified = f"{func}{value}"
                     else:
                         col_name = f"{func}({value})"
                         col_name_modified = ''.join(e for e in col_name if e.isalnum() or e in ["_"]).upper()
@@ -492,8 +491,8 @@ class Profiling:
         tables_to_add_config = []
         for item in list(set(self.bigquery_tables_to_crawl)):
             ds, table = item.split(".")
-            schemas_filter.append(ds)
-            tables_filter.append(table)
+            # schemas_filter.append(ds)
+            # tables_filter.append(table)
             tables_to_add_config.append({
                 "table_name": table,
                 "schema_name": ds,
@@ -565,7 +564,7 @@ class Profiling:
                     else:
                         job_status = result["status"]
                     print("Browse source job poll status : " + job_status)
-                    if job_status in ["completed", "failed", "aborted"]:
+                    if job_status in ["completed", "failed", "aborted", "canceled"]:
                         break
                     if job_status is None:
                         print(f"Error occurred during job {job_id} status poll")
@@ -970,8 +969,9 @@ def main():
                         "interactive_cluster_id": interactive_compute_id,
                         "table_ids": tables_added
                     }
-                    ingestion_job_status = profiling_obj.submit_source_job(source_id=dataprofiling_source_id, body=body, poll=True)
-            if ingestion_job_status:
+                    ingestion_job_status = profiling_obj.submit_source_job(source_id=dataprofiling_source_id, body=body,
+                                                                           poll=True)
+            if ingestion_job_status in [True, 0]:
                 print("Ingestion Job is successful. Hence crawling the BigQuery source")
                 if profiling_obj.config_variables.get('others').get('browse_crawl_bq_source').lower() == "true":
                     bq_source_id = profiling_obj.config_variables.get("bq_source_details").get("bq_source_id")
@@ -979,7 +979,10 @@ def main():
                     print(f"Crawling Big Query Source")
                     for dataset in ds_table_mapping:
                         tables_to_crawl = ds_table_mapping[dataset]
-                        status = profiling_obj.browse_crawl_bq_source(bq_source_id, project_name, schemas_filter=[dataset],
+                        for i in tables_to_crawl:
+                            profiling_obj.bigquery_tables_to_crawl.append(f"{dataset}.{i}")
+                        status = profiling_obj.browse_crawl_bq_source(bq_source_id, project_name,
+                                                                      schemas_filter=[dataset],
                                                                       tables_filter=tables_to_crawl)
 
         for i in range(NUMBER_OF_THREADS):
